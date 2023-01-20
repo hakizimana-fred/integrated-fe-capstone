@@ -95,7 +95,7 @@ if (contactForm && contactForm !== "undefined") {
             }
              
             try {
-                const response = await fetch('http://localhost:5000/api/create-message', {
+                const response = await fetch('https://andela-capstone-api-production.up.railway.app/api/create-message', {
                     method: 'POST',
                     body: JSON.stringify(data),
                     headers: {
@@ -198,7 +198,7 @@ if (loginForm && loginForm !== "undefined") {
 // user regisration
 async function registerUser(data) {
     try {
-    const response = await fetch('http://localhost:5000/api/user/signup', {
+    const response = await fetch('https://andela-capstone-api-production.up.railway.app/api/user/signup', {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -234,7 +234,7 @@ async function registerUser(data) {
 // login user
 async function loginUser(data) {
     try {
-    const response = await fetch('http://localhost:5000/api/user/login', {
+    const response = await fetch('https://andela-capstone-api-production.up.railway.app/api/user/login', {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",

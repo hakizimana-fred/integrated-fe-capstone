@@ -138,7 +138,7 @@
 
     async function fetchPost(token,blogId) {
         try {
-            const response = await fetch(`http://localhost:5000/api/posts/${blogId}`, {
+            const response = await fetch(`https://andela-capstone-api-production.up.railway.app/api/posts/${blogId}`, {
                 method: 'GET',
                 headers: {
                     "Access-Control-Allow-Origin": "*",
@@ -180,7 +180,7 @@
 
     async function postComment(comment, blogId) {
         try {
-            const response = await fetch(`http://localhost:5000/api/post/comments/${blogId}`, {
+            const response = await fetch(`https://andela-capstone-api-production.up.railway.app/api/post/comments/${blogId}`, {
                 method: 'POST',
                 headers: {
                     "Access-Control-Allow-Origin": "*",
@@ -201,7 +201,7 @@
         const blogId = urlParams.get('id')
 
         try {
-        const response = await fetch(`http://localhost:5000/api/post/comments/${blogId}`, {
+        const response = await fetch(`https://andela-capstone-api-production.up.railway.app/api/post/comments/${blogId}`, {
                 method: 'GET',
                 headers: {
                     "Access-Control-Allow-Origin": "*",

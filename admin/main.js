@@ -39,7 +39,7 @@ document.getElementById('message-card').addEventListener('click', async (e) => {
     document.querySelector('.message-modal').style.display = 'block'
     // fetch messages
     try {
-          const response = await fetch('http://localhost:5000/api/get-messages', {
+          const response = await fetch('https://andela-capstone-api-production.up.railway.app/api/get-messages', {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -146,7 +146,7 @@ const myBlog = {
 
 
 try {
-     const response = await fetch('http://localhost:5000/api/posts', {
+     const response = await fetch('https://andela-capstone-api-production.up.railway.app/api/posts', {
             method: 'POST',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -170,7 +170,7 @@ async function getBlogs() {
     const tableBody = document.querySelector('#table-body')
 
      try {
-        const response = await fetch('http://localhost:5000/api/posts', {
+        const response = await fetch('https://andela-capstone-api-production.up.railway.app/api/posts', {
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -215,14 +215,50 @@ async function getBlogs() {
 
 const postsCount = document.getElementById('posts-count')
 
-function getBlogsLength(){
-    return '1' 
+async function getBlogsLength(){
+    try {
+        const response = await fetch('https://andela-capstone-api-production.up.railway.app/api/posts-count', {
+             headers: {
+                "Access-Control-Allow-Origin": "*",
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('user-loggedin')}`
+            },
+        })
+        if (response.status === 200) {
+            const data = await response.json()
+            console.log('my data', data)
+            document.getElementById('posts-counter').innerHTML = data.postCount
+        }
+    }catch(err) {
+        console.log(err.message)
+    }
 }
+
+async function getUsersCount(){
+    try {
+        const response = await fetch('https://andela-capstone-api-production.up.railway.app/api/users-count', {
+             headers: {
+                "Access-Control-Allow-Origin": "*",
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('user-loggedin')}`
+            },
+        })
+        if (response.status === 200) {
+            const data = await response.json()
+            console.log('my data', data)
+            document.getElementById('users-counter').innerHTML = data.usersCount
+        }
+    }catch(err) {
+        console.log(err.message)
+    }
+}
+
 // fetch blogs from backend
 document.addEventListener('DOMContentLoaded', async () => {
     await getBlogs()
+    await getBlogsLength()
+    await getUsersCount()
 })
-getBlogsLength()
 
 
 
@@ -230,7 +266,7 @@ async function deleteBlog(e) {
     const blogId = e.id
     alert("Are you sure?")
     try {
-        const response = await fetch(`http://localhost:5000/api/posts/${blogId}`, {
+        const response = await fetch(`https://andela-capstone-api-production.up.railway.app/api/posts/${blogId}`, {
             method: 'DELETE',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -266,7 +302,7 @@ function updateBlog(e) {
         }
        
         try {
-        const response = await fetch(`http://localhost:5000/api/posts/${blogId}`, {
+        const response = await fetch(`https://andela-capstone-api-production.up.railway.app/api/posts/${blogId}`, {
             method: 'PATCH',
             headers: {
                 "Access-Control-Allow-Origin": "*",
