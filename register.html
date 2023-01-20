@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/utils.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <h1 class="navbar-brand">Fred.</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#work">Work</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="login-user">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container flex flex-column">
+      <div class="contact-form login-form">
+         <div class="warning hidden"></div>
+          <h1 class="text-md" style="color: #6F65FA; font-weight: 600; text-align: center; text-transform: capitalize;">Sign up</h1>
+            <form id="signup-form">
+                <div class="form-control">
+                    <input placeholder="Name" type="text" name="name" id="name">
+                </div>
+
+                <div class="form-control">
+                    <input placeholder="Email" type="email" name="email" id="email">
+                </div> 
+
+                <div class="form-control">
+                    <input placeholder="Password" type="password" name="password" id="password">
+                </div> 
+
+
+                <button type="submit" class="btn btn-primary btn-contact">Signup</button>
+            </form>
+            
+
+            <p>Have an account <a href="login.html">Login</a></p>
+        </div>
+       
+    </div>
+    
+
+
+  <section class="contact flex-column">
+        <h1 class="text-md">Contact me</h1>
+        <p>if you have any interesting project hit my email</p> 
+        <button class="btn btn-email">hello@gmail.com</button>
+  </section>
+
+
+
+  <div class="footer-socials">
+    <div class="socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-github"></i></a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Fred &copy; <span id="year">2022</span></p>
+  </footer>
+
+  <script>
+     document.addEventListener('DOMContentLoaded', () => {
+        const savedUser = JSON.parse(localStorage.getItem('user-loggedin')) 
+        if (savedUser) return window.history.back()
+    })
+  </script>
+
+ <script src="js/main.js"></script>
+</body>
+</html>

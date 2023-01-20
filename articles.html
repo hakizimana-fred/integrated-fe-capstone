@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/utils.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+     <button onclick="topFunction()" id="myBtn" title="Go to top">
+         <i class="fa fa-arrow-up" aria-hidden="true"></i>
+     </button>
+      <div class="menu-btn">
+        <i class="fas fa-bars fa-2x"></i>
+    </div>
+    <nav>
+        <div class="container">
+            <h1 class="navbar-brand">Fred.</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#work">Work</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="login-user">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+        <div class="mobile-nav ">
+        <div class="top-nav">
+              <ul class="menu show">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul> 
+        </div>
+     </div>
+
+    <div class="container">
+        <div class="article-card" style="background: #F4F5F5 !important">
+            <div class="flex-between" style="padding-bottom: 50px">
+                 <img  id="blog-img" alt="">
+
+              <div class="article">
+                <h1 class="article-heading"></h1>
+                <div class="article-content">
+                    <span class="date"></span>
+                  
+                </div>
+            </div>
+            </div>
+
+            <div class="article-content" style="padding-bottom: 50px">
+                <p class="content-article"></p>
+            </div>
+
+            <div class="article-actions flex">
+                <button class="btn" type="button"  onclick="like()"><span style="margin-right: 40px;"><i class="fa-solid fa-heart" style="color: #F36D6D; font-size: 20px;"></i></span><span class="like"></span></button>
+               
+            </div>
+
+            <div  style="width: 100%; border: 1px solid #D7D7D7; "></div>
+
+            <div class="comment-form">
+                <form action="" id="comment-form"> 
+                     <div class="form-control">
+                        <textarea name="comment" placeholder="comment" id="comment"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Post</button>
+                </form>
+            </div>
+
+            <div class="comments-count"></div>
+            <div  style="width: 100%; border: 1px solid #D7D7D7; "></div>
+
+            <div class="comments flex">
+               
+                <div>
+                
+                 <div class="comments-content">
+                
+                </div>
+                </div>
+
+            </div>
+            <div  style="width: 100%; border: 1px solid #D7D7D7; "></div>
+        </div>
+    </div>
+
+
+  <section class="contact flex-column">
+        <h1 class="text-md">Contact me</h1>
+        <p>if you have any interesting project hit my email</p> 
+        <button class="btn btn-email">hello@gmail.com</button>
+  </section>
+
+
+
+  <div class="footer-socials">
+    <div class="socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-github"></i></a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Fred &copy; <span id="year">2022</span></p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+
+         const token = localStorage.getItem('user-loggedin')
+        if (!token) return window.location.href="/login.html"
+
+        const idQuery = window.location.search
+        const urlParams = new URLSearchParams(idQuery)
+        const blogId = urlParams.get('id')
+
+        if (blogId) {
+            await fetchPost(token,blogId)
+        }else{
+            return window.history.back()
+        }
+        fetchComments()
+
+    })
+
+    async function fetchPost(token,blogId) {
+        try {
+            const response = await fetch(`http://localhost:5000/api/posts/${blogId}`, {
+                method: 'GET',
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }) 
+            if (response.status === 200) {
+                const data = await response.json()
+                document.querySelector('.article-heading').innerHTML = data.title
+                document.querySelector('.date').innerHTML = data.createdAt.substring(0,10)
+                document.querySelector('.content-article').innerHTML = data.content
+                document.querySelector('#blog-img').src = data.imgUrl
+            }
+
+        }catch(err) {
+            console.log(err.message)
+        }
+    }
+
+
+    let comments = []
+    document.querySelector('.comment-form').addEventListener('submit', async (e) => {
+        e.preventDefault()
+        const idQuery = window.location.search
+        const urlParams = new URLSearchParams(idQuery)
+        const blogId = urlParams.get('id')
+
+        const commentArea = document.querySelector('#comment').value
+        const user = JSON.parse(localStorage.getItem('loggedin-user')) || {}
+
+        const comment = {
+            content: commentArea,
+        }
+        await postComment(comment, blogId)
+        await fetchComments()
+       
+    })
+
+    async function postComment(comment, blogId) {
+        try {
+            const response = await fetch(`http://localhost:5000/api/post/comments/${blogId}`, {
+                method: 'POST',
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('user-loggedin')}`
+                },
+                body: JSON.stringify(comment)
+            })
+        }catch(err) {
+            console.log(err.message)
+        }
+    }
+
+
+    async function fetchComments() {
+        const idQuery = window.location.search
+        const urlParams = new URLSearchParams(idQuery)
+        const blogId = urlParams.get('id')
+
+        try {
+        const response = await fetch(`http://localhost:5000/api/post/comments/${blogId}`, {
+                method: 'GET',
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('user-loggedin')}`
+                }
+        })
+        if (response.status === 200){
+            let comments = await response.json()
+            comments.reverse()
+            const commentsContent = document.querySelector('.comments-content')
+            let output = '' 
+
+        if (comments.length > 0) {
+            comments.forEach(comment => {
+                    output += `
+                        <div style="width: 100%;">
+                            <h3 style="font-weight:600;">${comment.username}</h3>
+                            <p style="font-size: 18px">${comment.content}</p>
+                            <b>${comment.createdAt.slice(0, 10)}</b>
+                            <hr />
+                        </div>
+                    `
+                
+            })
+            commentsContent.innerHTML = output
+        }
+    }
+    }catch(err) {
+        console.log(err.message)
+    }        
+
+}
+
+    let likes = []
+
+    function like() {
+        const idQuery = window.location.search
+        const urlParams = new URLSearchParams(idQuery)
+        const blogId = urlParams.get('id')
+
+        const loggedinUser = JSON.parse(localStorage.getItem('loggedin-user')) || {}
+        const likedBlog = {
+            blogId,
+            userId: loggedinUser?.userId
+
+        }
+
+        if (JSON.parse(localStorage.getItem('brand-likes')) === null) {
+            likes.push(likedBlog)
+            localStorage.setItem('brand-likes', JSON.stringify(likes))
+        }else {
+            likes = JSON.parse(localStorage.getItem('brand-likes'))
+             for (userlike of likes) {
+                if (userlike.userId === loggedinUser.userId) {
+                    const unliked = likes.filter(userliked => userliked.userId !== loggedinUser.userId)
+                    localStorage.setItem('brand-likes', JSON.stringify(unliked))
+                    fetchLikes()
+                    return false
+                }
+             }
+            likes.push(likedBlog)
+            localStorage.setItem('brand-likes', JSON.stringify(likes))
+        }        
+
+        fetchLikes()
+    }
+
+
+    function fetchLikes() {
+        const idQuery = window.location.search
+        const urlParams = new URLSearchParams(idQuery)
+        const blogId = urlParams.get('id')
+        const likes = JSON.parse(localStorage.getItem('brand-likes'))
+        const likesLength =  []
+        const likedEl = document.querySelector('.like')
+        
+        likes.forEach(like => {
+            if (like.blogId === blogId) {
+                likesLength.push(like)
+            }
+        })
+
+        likedEl.innerHTML = likesLength.length
+
+    }
+
+    fetchLikes()
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const user = JSON.parse(localStorage.getItem('user-loggedin'))
+        if (!user) return window.history.back()
+    })
+
+
+  </script>
+
+ <script src="js/main.js"></script>
+</body>
+</html>

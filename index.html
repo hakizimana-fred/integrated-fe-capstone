@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/utils.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+      <button onclick="topFunction()" id="myBtn" title="Go to top">
+         <i class="fa fa-arrow-up" aria-hidden="true"></i>
+     </button>
+
+     <div class="menu-btn">
+        <i class="fas fa-bars fa-2x"></i>
+    </div>
+
+    <nav id="nav">
+        <div class="container">
+            <h1 class="navbar-brand">Fred.</h1>
+            <ul class="menu show">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="login-user">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+     <div class="mobile-nav ">
+        <div class="top-nav">
+              <ul class="menu show">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul> 
+        </div>
+     </div>
+
+
+    
+  <header class="header">
+    <div class="container flex-between">
+        <div class="content">
+            <h1 class="text-md">full stack developer</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nobis temporibus pariatur animi fuga deserunt saepe accusamus eaque accusantium itaque?</p>
+            <a href="Fred__resume.pdf" download class="btn" type="button">Download CV</a>
+        </div>
+        <div class="banner-image">
+            <img src="images/code.jpg" alt="">
+        </div>
+    </div>
+  </header>
+
+  <section class="about" id="about">
+    <div class="container-about flex flex-about">
+        <img src="images/Fred.jpg" alt="Hakiziman Fred" class="about-img">
+
+        <div class="about-content">
+        <h1 class="text-md">Full Stack Developer</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas at eveniet, qui quae illum saepe! Harum, deserunt esse. Recusandae, numquam. Vero sed totam, magni quasi magnam voluptatum tempore. Illum, magnam!</p>
+        <div class="socials flex flex-socials">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://github.com/hakizimana-fred"><i class="fa-brands fa-github"></i></a>
+        </div>
+    </div>
+    </div>
+ 
+  </section>
+
+  <section class="skills" id="skills">
+    <div class="container">
+    <h1 class="text-md text-skills">Skills</h1> 
+    <div class="grid-4">
+        <img src="images/node.png" alt="">
+        <img src="images/python.png" alt="">
+        <img src="images/javascript.png" alt="">
+        <img src="images/typescript.png" alt="">
+        <img src="images/react.png" alt="">
+        <img src="images/nextjs.jpeg" alt="">
+        <img src="images/clojure.png" alt="">
+        <img src="images/ruby.png" alt="">
+        <img src="images/php.png" alt="">
+    </div>
+    </div>
+  </section>
+
+  <section class="work" id="work">
+    <div class="container">
+         <h1 class="text-md" style="font-weight: 600; margin-bottom: 30px;">My works</h1> 
+        <div class="grid-2">
+            <div>
+            <div class="card-work">
+                <img src="images/blog.png" alt="">
+            </div>
+
+            <div class="card-work">
+                <img src="images/heloooooo.jpg" alt="">
+            </div>
+            </div>
+
+            <div>
+            <div class="card-work">
+                <img src="images/phone.png" alt="">
+            </div>
+
+            <div class="card-work">
+                <img src="images/blog.png" alt="">
+            </div>
+            </div>
+        </div> 
+        <div class="text-center">Discover all my recent project<span><i class="fa-solid fa-arrow-right"></i></span> </div>
+    </div>
+  </section>
+
+  <section class="contact flex-column">
+        <h1 class="text-md">Contact me</h1>
+        <p class="contact">if you have any interesting project hit my email</p> 
+        <button class="btn btn-email">hello@gmail.com</button>
+  </section>
+
+
+
+  <div class="footer-socials">
+    <div class="socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href=""><i class="fa-brands fa-twitter"></i></a>
+        <a href="https://github.com/hakizimana-fred"><i class="fa-brands fa-github"></i></a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Fred &copy; <span id="year">2022</span></p>
+  </footer>
+
+ <script src="js/main.js"></script>
+</body>
+</html>
