@@ -236,63 +236,65 @@
 
 }
 
-    let likes = []
 
-    function like() {
+    async function like() {
         const idQuery = window.location.search
         const urlParams = new URLSearchParams(idQuery)
         const blogId = urlParams.get('id')
 
-        const loggedinUser = JSON.parse(localStorage.getItem('loggedin-user')) || {}
-        const likedBlog = {
-            blogId,
-            userId: loggedinUser?.userId
-
+        try {
+            const response = await fetch(`https://andela-capstone-api-production.up.railway.app/api/post/likes/${blogId}`, {
+                method: 'POST',
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('user-loggedin')}`
+                }
+            })
+            if (response.status === 200) {
+                const data = await response.json()
+                console.log(data.doc.likeCount, 'just data')
+                document.querySelector('.like').innerHTML = data.doc.likeCount
+            }
+        }catch(err){
+            console.log(err.message)
         }
 
-        if (JSON.parse(localStorage.getItem('brand-likes')) === null) {
-            likes.push(likedBlog)
-            localStorage.setItem('brand-likes', JSON.stringify(likes))
-        }else {
-            likes = JSON.parse(localStorage.getItem('brand-likes'))
-             for (userlike of likes) {
-                if (userlike.userId === loggedinUser.userId) {
-                    const unliked = likes.filter(userliked => userliked.userId !== loggedinUser.userId)
-                    localStorage.setItem('brand-likes', JSON.stringify(unliked))
-                    fetchLikes()
-                    return false
-                }
-             }
-            likes.push(likedBlog)
-            localStorage.setItem('brand-likes', JSON.stringify(likes))
-        }        
-
-        fetchLikes()
+        await fetchLikes()
     }
 
 
-    function fetchLikes() {
+    async function fetchLikes() {
         const idQuery = window.location.search
         const urlParams = new URLSearchParams(idQuery)
         const blogId = urlParams.get('id')
-        const likes = JSON.parse(localStorage.getItem('brand-likes'))
-        const likesLength =  []
-        const likedEl = document.querySelector('.like')
+        //const likedEl = document.querySelector('.like')
         
-        likes.forEach(like => {
-            if (like.blogId === blogId) {
-                likesLength.push(like)
+        try {
+            const response = await fetch(`https://andela-capstone-api-production.up.railway.app/api/get/likes/${blogId}`, {
+                method: 'GET',
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('user-loggedin')}`
+                }
+            })
+            if (response.status === 200) {
+                const data = response.json()
+                console.log(data.doc.like, 'well')
+                //likedEl.innerHTML = data.doc.likeCount
             }
-        })
+        }catch(err){
+            console.log(err.message)
+        }
 
-        likedEl.innerHTML = likesLength.length
 
     }
 
     fetchLikes()
 
       document.addEventListener('DOMContentLoaded', () => {
-        const user = JSON.parse(localStorage.getItem('user-loggedin'))
+        const user = localStorage.getItem('user-loggedin')
         if (!user) return window.history.back()
     })
 
